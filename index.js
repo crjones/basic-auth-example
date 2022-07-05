@@ -7,7 +7,9 @@ app.use((req, res, next) => {
     console.log(req.headers)
 
     if (!req.headers.authorization || req.headers.authorization.indexOf('Basic ') === -1) {
-        res.status(401).end('Missing Authorization Header');
+        res.status(401);
+        res.setHeader('WWW-Authenticate', 'Basic realm="Authenticated"')
+        res.end('Missing Authorization Header');
     } else {
 
         console.log(auth(req))
